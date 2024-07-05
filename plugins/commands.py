@@ -240,24 +240,36 @@ async def start(client, message):
         return await sts.delete()
     
     if data.startswith("sendfiles"):
-        chat_id = int("-" + file_id.split("-")[1])
-        userid = message.from_user.id if message.from_user else None
-        ghost_url = await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=allfiles_{file_id}")
-        client_msg = await client.send_message(chat_id=message.from_user.id,text=f"👋 Hey {message.from_user.mention}\n\nDownload Link Generated ✔, Kindly click on download button below 👇 .\n\n", reply_markup=InlineKeyboardMarkup(
-                [
+        try:
+            chat_id = int("-" + file_id.split("-")[1])
+            userid = message.from_user.id if message.from_user else None
+
+            ghost_url = await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=allfiles_{file_id}")
+
+            client_msg = await client.send_message(
+                chat_id=userid,
+                text=f"👋 Hey {message.from_user.mention}\n\nDownload Link Generated ✔, Kindly click on download button below 👇 .\n\n",
+                reply_markup=InlineKeyboardMarkup(
                     [
-                        InlineKeyboardButton('📁 ᴅᴏᴡɴʟᴏᴀᴅ 📁', url=ghost_url)
-                    ], [
-                        InlineKeyboardButton('⚡ ʜᴏᴡ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ⚡', url=await get_tutorial(chat_id))
-                    ], [
-                        InlineKeyboardButton('🎉 ʙᴜʏ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : ʀᴇᴍᴏᴠᴇ ᴀᴅꜱ 🎊', callback_data="seeplans")                        
+                        [
+                            InlineKeyboardButton('📁 ᴅᴏᴡɴʟᴏᴀᴅ 📁', url=ghost_url)
+                        ],
+                        [
+                            InlineKeyboardButton('⚡ ʜᴏᴡ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ⚡', url=await get_tutorial(chat_id))
+                        ],
+                        [
+                            InlineKeyboardButton('🎉 ʙᴜʏ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : ʀᴇᴍᴏᴠᴇ ᴀᴅꜱ 🎊', callback_data="seeplans")
+                        ]
                     ]
-                ]
+                )
             )
-        )
-        await asyncio.sleep(1800)
-        await client_msg.edit("<b>ʏᴏᴜʀ ᴍᴇꜱꜱᴀɢᴇ ɪꜱ ᴅᴇʟᴇᴛᴇᴅ !\nᴋɪɴᴅʟʏ ꜱᴇᴀʀᴄʜ ᴀɢᴀɪɴ.</b>")
-        return
+
+            await asyncio.sleep(1800)
+            await client_msg.edit("<b>ʏᴏᴜʀ ᴍᴇꜱꜱᴀɢᴇ ɪꜱ ᴅᴇʟᴇᴛᴇᴅ !\nᴋɪɴᴅʟʏ ꜱᴇᴀʀᴄʜ ᴀɢᴀɪɴ.</b>")
+            return
+        except Exception as e:
+            print(f"Error handling sendfiles: {e}")
+        
          
     elif data.startswith("all"):
         print('Help ! i am hit')
