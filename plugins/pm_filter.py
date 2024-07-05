@@ -2595,6 +2595,11 @@ async def auto_filter(client, msg, spoll=False):
         try:
             z = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                         reply_markup=InlineKeyboardMarkup(btn))
+            thanksS = await message.reply_text(f"♥ Thank you **{message.from_user.mention}**...\n<code>🎉 we love you 🎊</code>")
+            embraceS = await thanks.reply_sticker(sticker=random.choice(lazystickerset))
+            await asyncio.sleep(5)
+            await thanksS.delete()
+            await embraceS.delete()
             if SELF_DELETE:
                 await asyncio.sleep(SELF_DELETE_SECONDS)
                 await z.delete()
@@ -2615,7 +2620,11 @@ async def auto_filter(client, msg, spoll=False):
         except Exception as e:
             logger.exception(e)
             n = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
-            
+            thanksz = await message.reply_text(f"♥ Thank you **{message.from_user.mention}**...\n<code>🎉 we love you 🎊</code>")
+            embracez = await thanks.reply_sticker(sticker=random.choice(lazystickerset))
+            await asyncio.sleep(5)
+            await thanksz.delete()
+            await embracez.delete()
             if SELF_DELETE:
                 await asyncio.sleep(SELF_DELETE_SECONDS)
                 await n.delete()         
