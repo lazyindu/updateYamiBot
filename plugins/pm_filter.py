@@ -235,7 +235,7 @@ async def next_page(bot, query):
         #     # create a new entry for the user in the download counts dictionary
         #     download_counts[query.from_user.id] = {'date': current_date, 'count': 1}d
     if settings['button']:
-            if URL_MODE is True:
+            if settings['url_mode']:
                 if query.from_user.id in ADMINS:
                     btn = [
                         [
@@ -312,7 +312,7 @@ async def next_page(bot, query):
                     ]
 
     else:
-        if URL_MODE is True:
+        if settings['url_mode']:
             if query.from_user.id in ADMINS:
                 btn = [
                     [
@@ -546,8 +546,8 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
             #     ]
             #     for file in files
             # ]
-            if URL_MODE is True:
-                if message.from_user.id in ADMINS:
+            if settings['url_mode']:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -594,7 +594,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
                         for file in files
                     ]
             else:
-                if message.from_user.id in ADMINS:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -623,7 +623,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
                     ]
 
         else:
-            if URL_MODE is True:
+            if settings['url_mode']:
                 if query.from_user.id in ADMINS:
                     btn = [
                         [
@@ -850,8 +850,8 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
             #     ]
             #     for file in files
             # ]
-            if URL_MODE is True:
-                if message.from_user.id in ADMINS:
+            if settings['url_mode']:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -898,7 +898,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
                         for file in files
                     ]
             else:
-                if message.from_user.id in ADMINS:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -927,7 +927,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
                     ]
 
         else:
-            if URL_MODE is True:
+            if settings['url_mode']:
                 if query.from_user.id in ADMINS:
                     btn = [
                         [
@@ -1126,8 +1126,8 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             #     ]
             #     for file in files
             # ]
-            if URL_MODE is True:
-                if message.from_user.id in ADMINS:
+            if settings['url_mode']:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -1174,7 +1174,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
                         for file in files
                     ]
             else:
-                if message.from_user.id in ADMINS:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -1203,7 +1203,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
                     ]
 
         else:
-            if URL_MODE is True:
+            if settings['url_mode']:
                 if query.from_user.id in ADMINS:
                     btn = [
                         [
@@ -1705,8 +1705,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ident, key = query.data.split("#")
         settings = await get_settings(query.message.chat.id)
         try:
-            if settings['url_mode'] and user not in PRIME_USERS:
-                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles_{key}")
+            if settings['url_mode'] and not db.has_prime_status(user):
+                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles1_{key}")
                 return
             else:
                 await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=allfiles_{key}")
@@ -1852,10 +1852,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"🔍 Search Here 🔎", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
-
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                 [
@@ -1880,9 +1877,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"🔍 Search Here 🔎", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                 [
@@ -1907,10 +1902,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"🔍 Search Here 🔎", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
-
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                 [
@@ -1935,9 +1927,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"🔍 Search Here 🔎", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                 [
@@ -1962,10 +1952,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"🔍 Search Here 🔎", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
-
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                 [
@@ -1990,9 +1977,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"🔍 Search Here 🔎", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                 [
@@ -2017,10 +2002,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             btn = [[
                 InlineKeyboardButton(text=f"💛 Request More 💛", url=f"https://telegram.me/{MOVIE_GROUP_USERNAME}")
             ],[
-                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/LazyDeveloperSupport")
-            ],[
-                InlineKeyboardButton(text=f"⚡️ Learn Bot Making 🦋", url=f"https://youtube.com/@LazyDeveloperr")
-
+                InlineKeyboardButton(text=f"🐞 REPORT BUG 🐞", url=f"https://telegram.me/Karansahuidk")
             ]]
             btn_lzdv = [
                         [InlineKeyboardButton(text=f"♻ ̶R̶e̶q̶u̶e̶s̶t̶ ̶R̶e̶c̶i̶e̶v̶e̶d ♻", callback_data=f"notify_user_req_rcvd:{user_id}:{movie}")],
@@ -2388,7 +2370,7 @@ async def auto_filter(client, msg, spoll=False):
     temp.SHORT[message.from_user.id] = message.chat.id
     if settings["button"]:
             if settings["url_mode"]:
-                if message.from_user.id in ADMINS:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -2435,7 +2417,7 @@ async def auto_filter(client, msg, spoll=False):
                         for file in files
                     ]
             else:
-                if message.from_user.id in ADMINS:
+                if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -2465,7 +2447,7 @@ async def auto_filter(client, msg, spoll=False):
 
     else:
         if settings["url_mode"]:
-            if message.from_user.id in ADMINS:
+            if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
                 btn = [
                     [
                         InlineKeyboardButton(text=f"{file.file_name}",callback_data=f'files#{file.file_id}',),
@@ -2620,10 +2602,15 @@ async def auto_filter(client, msg, spoll=False):
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
 
             m = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            thanks = await message.reply_text(f"♥ Thank you **{message.from_user.mention}**...\n<code>🎉 we love you 🎊</code>")
+            embrace = await thanks.reply_sticker(sticker=random.choice(lazystickerset))
+            await asyncio.sleep(5)
+            await thanks.delete()
+            await embrace.delete()
             if SELF_DELETE:
                 await asyncio.sleep(SELF_DELETE_SECONDS)
                 await m.delete()
-                                          
+
         except Exception as e:
             logger.exception(e)
             n = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
@@ -2637,9 +2624,6 @@ async def auto_filter(client, msg, spoll=False):
         if SELF_DELETE:
             await asyncio.sleep(SELF_DELETE_SECONDS)
             await p.delete()
-            thanks = await message.reply_text(f"♥ Thank you **{message.from_user.mention}**...\n<code>🎉 we love you 🎊</code>")
-            embrace = await thanks.reply_sticker(sticker=random.choice(lazystickerset))
-
     if spoll:
         await msg.message.delete()
 
