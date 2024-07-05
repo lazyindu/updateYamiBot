@@ -1706,7 +1706,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         settings = await get_settings(query.message.chat.id)
         try:
             if settings['url_mode'] and user not in PRIME_USERS:
-                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles1_{key}")
+                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles_{key}")
                 return
             else:
                 await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=allfiles_{key}")
