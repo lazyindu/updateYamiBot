@@ -236,7 +236,7 @@ async def next_page(bot, query):
         #     download_counts[query.from_user.id] = {'date': current_date, 'count': 1}d
     if settings['button']:
             if settings['url_mode']:
-                if query.from_user.id in ADMINS:
+                if query.from_user.id in ADMINS or await db.has_prime_status(query.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -283,7 +283,7 @@ async def next_page(bot, query):
                         for file in files
                     ]
             else:
-                if query.from_user.id in ADMINS:
+                if query.from_user.id in ADMINS or await db.has_prime_status(query.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(
@@ -313,7 +313,7 @@ async def next_page(bot, query):
 
     else:
         if settings['url_mode']:
-            if query.from_user.id in ADMINS:
+            if query.from_user.id in ADMINS or await db.has_prime_status(query.from_user.id):
                 btn = [
                     [
                         InlineKeyboardButton(text=f"{file.file_name}",callback_data=f'files#{file.file_id}',),
@@ -624,7 +624,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
 
         else:
             if settings['url_mode']:
-                if query.from_user.id in ADMINS:
+                if query.from_user.id in ADMINS or await db.has_prime_status(query.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(text=f"{file.file_name}",callback_data=f'files#{file.file_id}',),
@@ -928,7 +928,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
 
         else:
             if settings['url_mode']:
-                if query.from_user.id in ADMINS:
+                if query.from_user.id in ADMINS or await db.has_prime_status(query.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(text=f"{file.file_name}",callback_data=f'files#{file.file_id}',),
@@ -1204,7 +1204,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
 
         else:
             if settings['url_mode']:
-                if query.from_user.id in ADMINS:
+                if query.from_user.id in ADMINS or await db.has_prime_status(query.from_user.id):
                     btn = [
                         [
                             InlineKeyboardButton(text=f"{file.file_name}",callback_data=f'files#{file.file_id}',),
@@ -1705,8 +1705,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ident, key = query.data.split("#")
         settings = await get_settings(query.message.chat.id)
         try:
-            if settings['url_mode'] and not db.has_prime_status(user):
-                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles1_{key}")
+            if settings['url_mode'] and not await db.has_prime_status(user):
+                ghost_url = await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=allfiles_{key}")
+                await query.answer(url=ghost_url)
                 return
             else:
                 await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=allfiles_{key}")
@@ -2614,11 +2615,17 @@ async def auto_filter(client, msg, spoll=False):
         except Exception as e:
             logger.exception(e)
             n = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+            
             if SELF_DELETE:
                 await asyncio.sleep(SELF_DELETE_SECONDS)
                 await n.delete()         
     else:
         p = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+        thanksx = await message.reply_text(f"♥ Thank you **{message.from_user.mention}**...\n<code>🎉 we love you 🎊</code>")
+        embracex = await thanks.reply_sticker(sticker=random.choice(lazystickerset))
+        await asyncio.sleep(5)
+        await thanksx.delete()
+        await embracex.delete()
         await asyncio.sleep(250)
         await p.delete()
         if SELF_DELETE:

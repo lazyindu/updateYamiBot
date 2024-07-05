@@ -241,7 +241,6 @@ async def start(client, message):
     
     if data.startswith("sendfiles"):
         try:
-            chat_id = int("-" + file_id.split("-")[1])
             userid = message.from_user.id if message.from_user else None
 
             ghost_url = await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=allfiles_{file_id}")
@@ -253,9 +252,6 @@ async def start(client, message):
                     [
                         [
                             InlineKeyboardButton('📁 ᴅᴏᴡɴʟᴏᴀᴅ 📁', url=ghost_url)
-                        ],
-                        [
-                            InlineKeyboardButton('⚡ ʜᴏᴡ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ⚡', url=await get_tutorial(chat_id))
                         ],
                         [
                             InlineKeyboardButton('🎉 ʙᴜʏ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : ʀᴇᴍᴏᴠᴇ ᴀᴅꜱ 🎊', callback_data="seeplans")
@@ -270,7 +266,6 @@ async def start(client, message):
         except Exception as e:
             print(f"Error handling sendfiles: {e}")
         
-         
     elif data.startswith("all"):
         print('Help ! i am hit')
         files = temp.GETALL.get(file_id)
