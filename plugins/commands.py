@@ -745,7 +745,7 @@ async def add_prime_status(client, message):
         print(e)
         
 @Client.on_message(filters.command("remove_prime") & filters.user(ADMINS))
-async def remove_prime_state(client, message):
+async def remove_prime(client, message):
     if len(message.command) == 2:
         user_id = int(message.command[1])  # Convert the user_id to integer
         user = await client.get_users(user_id)
