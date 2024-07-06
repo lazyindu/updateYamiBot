@@ -224,6 +224,14 @@ async def next_page(bot, query):
     temp.SHORT[query.from_user.id] = query.message.chat.id
     settings = await get_settings(query.message.chat.id)
     pre = 'filep' if settings['file_secure'] else 'file'
+    lazyuser_id = query.from_user.id
+    try:
+        if temp.SHORT.get(lazyuser_id)==None:
+            return await query.reply_text(text="<b>Please Search Again in Group</b>")
+        else:
+            chat_id = temp.SHORT.get(lazyuser_id)
+    except Exception as e:
+        print(e)
         # if query.from_user.id in download_counts and download_counts[query.from_user.id]['date'] == current_date:
         #     if download_counts[query.from_user.id]['count'] >= DOWNLOAD_LIMIT:
         #         # set URL_MODE to False to disable the URL shortener button
@@ -277,7 +285,7 @@ async def next_page(bot, query):
                         [
                             InlineKeyboardButton(
                                 text=f"[{get_size(file.file_size)}] {file.file_name}", 
-                                url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
+                                url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
                             ),
                         ]
                         for file in files
@@ -348,8 +356,8 @@ async def next_page(bot, query):
             else:
                 btn = [
                     [
-                        InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
-                        InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                        InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                        InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
                     ]
                     for file in files
                 ]
@@ -537,6 +545,15 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
         temp.GETALL[key] = files
         settings = await get_settings(message.chat.id)
         pre = 'filep' if settings['file_secure'] else 'file'
+        temp.SHORT[query.from_user.id] = query.message.chat.id
+        lazyuser_id = query.from_user.id
+        try:
+            if temp.SHORT.get(lazyuser_id)==None:
+                return await message.reply_text(text="<b>Please Search Again in Group</b>")
+            else:
+                chat_id = temp.SHORT.get(lazyuser_id)
+        except Exception as e:
+            print(e)
         if settings["button"]:
             # btn = [
             #     [
@@ -588,7 +605,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
                         [
                             InlineKeyboardButton(
                                 text=f"[{get_size(file.file_size)}] {file.file_name}", 
-                                url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
+                                url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
                             ),
                         ]
                         for file in files
@@ -659,8 +676,8 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
                 else:
                     btn = [
                         [
-                            InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
-                            InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                            InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                            InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
                         ]
                         for file in files
                     ]
@@ -841,6 +858,15 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
         temp.GETALL[key] = files
         settings = await get_settings(message.chat.id)
         pre = 'filep' if settings['file_secure'] else 'file'
+        temp.SHORT[query.from_user.id] = query.message.chat.id
+        lazyuser_id = query.from_user.id
+        try:
+            if temp.SHORT.get(lazyuser_id)==None:
+                return await message.reply_text(text="<b>Please Search Again in Group</b>")
+            else:
+                chat_id = temp.SHORT.get(lazyuser_id)
+        except Exception as e:
+            print(e)
         if settings["button"]:
             # btn = [
             #     [
@@ -892,7 +918,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
                         [
                             InlineKeyboardButton(
                                 text=f"[{get_size(file.file_size)}] {file.file_name}", 
-                                url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
+                                url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
                             ),
                         ]
                         for file in files
@@ -963,8 +989,8 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
                 else:
                     btn = [
                         [
-                            InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
-                            InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                            InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                            InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
                         ]
                         for file in files
                     ]
@@ -1117,6 +1143,15 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         temp.GETALL[key] = files 
         settings = await get_settings(message.chat.id)
         pre = 'filep' if settings['file_secure'] else 'file'
+        temp.SHORT[query.from_user.id] = query.message.chat.id
+        lazyuser_id = query.from_user.id
+        try:
+            if temp.SHORT.get(lazyuser_id)==None:
+                return await message.reply_text(text="<b>Please Search Again in Group</b>")
+            else:
+                chat_id = temp.SHORT.get(lazyuser_id)
+        except Exception as e:
+            print(e)
         if settings["button"]:
             # btn = [
             #     [
@@ -1168,7 +1203,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
                         [
                             InlineKeyboardButton(
                                 text=f"[{get_size(file.file_size)}] {file.file_name}", 
-                                url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
+                                url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
                             ),
                         ]
                         for file in files
@@ -1239,8 +1274,8 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
                 else:
                     btn = [
                         [
-                            InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
-                            InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                            InlineKeyboardButton(text=f"{file.file_name}",url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
+                            InlineKeyboardButton(text=f"[{get_size(file.file_size)}]", url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")),
                         ]
                         for file in files
                     ]
@@ -1534,34 +1569,50 @@ async def cb_handler(client: Client, query: CallbackQuery):
             f_caption = f_caption
         if f_caption is None:
             f_caption = f"{files.file_name}"
-
+        laxyuser = query.from_user.id
         try:
-            if AUTH_CHANNEL and not await is_subscribed(client, query):
-                await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
-                return
-            elif settings['botpm']:
-                await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
-                return
+            if not await db.has_prime_status(laxyuser) and settings['url_mode']:
+                if laxyuser == query.from_user.id:
+                    temp.SHORT[laxyuser] = query.message.chat.id
+                    await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=short_{file_id}")
+                    return
+                else:
+                    await query.answer(f"Hᴇʏ {query.from_user.first_name},\nTʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ.\nRᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
             else:
-                # Create the inline keyboard button with callback_data
-                button = InlineKeyboardButton('▶ Gen Stream / Download Link', callback_data=f'generate_stream_link:{file_id}')
-                # Create the inline keyboard markup with the button
-                keyboard = InlineKeyboardMarkup([[button]])
-                lazy_file = await client.send_cached_media(
-                    chat_id=query.from_user.id,
-                    file_id=file_id,
-                    caption=f_caption,
-                    reply_markup=keyboard,
-                    protect_content=True if ident == "filep" else False 
-                )
-                btnl = [[
-                InlineKeyboardButton("❗ ɢᴇᴛ ꜰɪʟᴇ ᴀɢᴀɪɴ ❗", callback_data=f'delfile#{file_id}')
-                ]]
-                await query.answer('Requested file has been sent to you privately. Check PM sweetheart ❤', show_alert=True)
-                l = await client.send_message(chat_id = query.from_user.id, text=f"<b>⚠ <u>warning ⚠</u> </b>\n\n<b>ᴛʜɪꜱ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ɪɴ</b> <b><u>30 ᴍɪɴᴜᴛᴇꜱ</u> </b><b>(ᴅᴜᴇ ᴛᴏ ᴄᴏᴘʏʀɪɢʜᴛ ɪꜱꜱᴜᴇꜱ).</b>\n\n<b><i>📌 ᴘʟᴇᴀꜱᴇ ꜰᴏʀᴡᴀʀᴅ ᴛʜɪꜱ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ᴛᴏ ꜱᴏᴍᴇᴡʜᴇʀᴇ ᴇʟꜱᴇ ᴀɴᴅ ꜱᴛᴀʀᴛ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴛʜᴇʀᴇ.</i></b>")
-                await asyncio.sleep(1800)
-                await lazy_file.delete()
-                await l.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",reply_markup=InlineKeyboardMarkup(btnl))
+                if laxyuser == query.from_user.id:
+                    await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start={ident}_{file_id}")
+                    return
+                else:
+                    await query.answer(f"Hᴇʏ {query.from_user.first_name},\nTʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ.\nRᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
+        
+                await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+                return
+            # if AUTH_CHANNEL and not await is_subscribed(client, query):
+            #     await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+            #     return
+            # elif settings['botpm']:
+            #     await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+            #     return
+            # else:
+                # # Create the inline keyboard button with callback_data
+                # button = InlineKeyboardButton('▶ Gen Stream / Download Link', callback_data=f'generate_stream_link:{file_id}')
+                # # Create the inline keyboard markup with the button
+                # keyboard = InlineKeyboardMarkup([[button]])
+                # lazy_file = await client.send_cached_media(
+                #     chat_id=query.from_user.id,
+                #     file_id=file_id,
+                #     caption=f_caption,
+                #     reply_markup=keyboard,
+                #     protect_content=True if ident == "filep" else False 
+                # )
+                # btnl = [[
+                # InlineKeyboardButton("❗ ɢᴇᴛ ꜰɪʟᴇ ᴀɢᴀɪɴ ❗", callback_data=f'delfile#{file_id}')
+                # ]]
+                # await query.answer('Requested file has been sent to you privately. Check PM sweetheart ❤', show_alert=True)
+                # l = await client.send_message(chat_id = query.from_user.id, text=f"<b>⚠ <u>warning ⚠</u> </b>\n\n<b>ᴛʜɪꜱ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ɪɴ</b> <b><u>30 ᴍɪɴᴜᴛᴇꜱ</u> </b><b>(ᴅᴜᴇ ᴛᴏ ᴄᴏᴘʏʀɪɢʜᴛ ɪꜱꜱᴜᴇꜱ).</b>\n\n<b><i>📌 ᴘʟᴇᴀꜱᴇ ꜰᴏʀᴡᴀʀᴅ ᴛʜɪꜱ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ᴛᴏ ꜱᴏᴍᴇᴡʜᴇʀᴇ ᴇʟꜱᴇ ᴀɴᴅ ꜱᴛᴀʀᴛ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴛʜᴇʀᴇ.</i></b>")
+                # await asyncio.sleep(1800)
+                # await lazy_file.delete()
+                # await l.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",reply_markup=InlineKeyboardMarkup(btnl))
         except UserIsBlocked:
             await query.answer('☣Unblock the bot sweetie!', show_alert=True)
         except PeerIdInvalid:
@@ -2155,7 +2206,50 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
+    elif query.data == "alertuser":
+        await query.answer(text=f"❤ Thank You {query.from_user.mention} ❤", show_alert=True)
 
+    elif query.data == "shortlink_info":
+            btn = [[
+            InlineKeyboardButton("1 / 3", callback_data="alertuser"),
+            InlineKeyboardButton("Next ⏭", callback_data="shortlink_info2")
+            ],[
+            InlineKeyboardButton('🏠 Home', callback_data='start')
+            ]]
+            reply_markup = InlineKeyboardMarkup(btn)
+            await query.message.edit_text(
+                text=(script.SHORTLINK_INFO),
+                reply_markup=reply_markup,
+                parse_mode=enums.ParseMode.HTML
+            )   
+    elif query.data == "shortlink_info2":
+            btn = [[
+            InlineKeyboardButton("🚪 Back", callback_data="shortlink_info"),
+            InlineKeyboardButton("2 / 3", callback_data="alertuser"),
+            InlineKeyboardButton("Next ⏭", callback_data="shortlink_info3")
+            ],[
+            InlineKeyboardButton('🏠 Home', callback_data='start')
+            ]]
+            reply_markup = InlineKeyboardMarkup(btn)
+            await query.message.edit_text(
+                text=(script.SHORTLINK_INFO2),
+                reply_markup=reply_markup,
+                parse_mode=enums.ParseMode.HTML
+            )
+    elif query.data == "shortlink_info3":
+            btn = [[
+            InlineKeyboardButton("🚪 Back", callback_data="shortlink_info2"),
+            InlineKeyboardButton("3 / 3", callback_data="alertuser")
+            ],[
+            InlineKeyboardButton('🏠 Home', callback_data='start')
+            ]]
+            reply_markup = InlineKeyboardMarkup(btn)
+            await query.message.edit_text(
+                text=(script.SHORTLINK_INFO3),
+                reply_markup=reply_markup,
+                parse_mode=enums.ParseMode.HTML
+            )   
+    
     elif query.data == "donatelazydev":
         buttons = [
             [ InlineKeyboardButton("⨳   Close   ⨳", callback_data="close_data") ]
@@ -2223,6 +2317,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if str(grp_id) != str(grpid):
             await query.message.edit("Your Active Connection Has Been Changed. Go To /settings.")
             return await query.answer('♥️ Thank You LazyDeveloper ♥️')
+        
+        if set_type == 'url_mode' and query.from_user.id not in ADMINS:
+            return await query.answer(text=f"Hey {query.from_user.first_name}, You can't change shortlink settings for your group !\n\nIt's an admin only setting !", show_alert=True)
 
         if status == "True":
             await save_group_settings(grpid, set_type, False)
@@ -2232,8 +2329,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         settings = await get_settings(grpid)
 
         if settings is not None:
-            if query.from_user.id in ADMINS:
-                buttons = [
+            buttons = [
                 [
                     InlineKeyboardButton('URL Mode',
                                          callback_data=f'setgs#url_mode#{settings["url_mode"]}#{str(grp_id)}'),
@@ -2274,42 +2370,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')
                 ]
             ]
-            else:
-                buttons = [
-                [
-                    InlineKeyboardButton('Filter Button',
-                                         callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('Single' if settings["button"] else 'Double',
-                                         callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('Bot PM', callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["botpm"] else '❌ No',
-                                         callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('File Secure',
-                                         callback_data=f'exit'),
-                    InlineKeyboardButton('✅ Yes' if settings["file_secure"] else '❌ No',
-                                         callback_data=f'exit')
-                ],
-                [
-                    InlineKeyboardButton('IMDB', callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["imdb"] else '❌ No',
-                                         callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('Spell Check',
-                                         callback_data=f'setgs#spell_check#{settings["spell_check"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["spell_check"] else '❌ No',
-                                         callback_data=f'setgs#spell_check#{settings["spell_check"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('Welcome', callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["welcome"] else '❌ No',
-                                         callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')
-                ]
-            ]
+
             reply_markup = InlineKeyboardMarkup(buttons)
             await query.message.edit_reply_markup(reply_markup)
     await query.answer('♥️ Thank You LazyDeveloper ♥️')
@@ -2369,6 +2430,14 @@ async def auto_filter(client, msg, spoll=False):
     FRESH[key] = search
     temp.GETALL[key] = files
     temp.SHORT[message.from_user.id] = message.chat.id
+    lazyuser_id = message.from_user.id
+    try:
+        if temp.SHORT.get(lazyuser_id)==None:
+            return await message.reply_text(text="<b>Please Search Again in Group</b>")
+        else:
+            chat_id = temp.SHORT.get(lazyuser_id)
+    except Exception as e:
+        print(e)
     if settings["button"]:
             if settings["url_mode"]:
                 if message.from_user.id in ADMINS or await db.has_prime_status(message.from_user.id):
@@ -2377,7 +2446,7 @@ async def auto_filter(client, msg, spoll=False):
                             InlineKeyboardButton(
                                 text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}'
                             ),
-                        ]
+                        ]   
                         for file in files
                     ]
                 elif message.from_user.id in MY_USERS:
@@ -2412,7 +2481,7 @@ async def auto_filter(client, msg, spoll=False):
                         [
                             InlineKeyboardButton(
                                 text=f"[{get_size(file.file_size)}] {file.file_name}", 
-                                url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
+                                url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}")
                             ),
                         ]
                         for file in files
