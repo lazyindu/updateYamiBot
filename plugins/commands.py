@@ -34,6 +34,8 @@ async def start(client, message):
                 InlineKeyboardButton('🙆🏻 Help 🦾', url=f"https://t.me/{temp.U_NAME}?start=help"),
             ],[
             InlineKeyboardButton('⪦ MOVIE CHANNEL ⪧', url='https://t.me/Yami_Movies')
+            ],[
+            InlineKeyboardButton('💸 Earn Money 💸', callback_data="shortlink_info")
             ],
             [
                 InlineKeyboardButton(text=DOWNLOAD_TEXT_NAME,url=DOWNLOAD_TEXT_URL)
@@ -123,7 +125,11 @@ async def start(client, message):
             ],
         [
             InlineKeyboardButton('⪦ MOVIE CHANNEL ⪧', url='https://t.me/Yami_Movies')
-        ]]
+        ],
+        [
+            InlineKeyboardButton('💸 Earn Money 💸', callback_data="shortlink_info")
+        ]
+        ]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
             photo=random.choice(PICS),
