@@ -1670,6 +1670,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('⚙ Open Settings ', callback_data='openSettings'),
         ],[
             InlineKeyboardButton('⪦ MOVIE CHANNEL ⪧', url='https://t.me/Yami_Movies')
+        ],[
+            InlineKeyboardButton('💸 Earn Money 💸', callback_data="shortlink_info")
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
